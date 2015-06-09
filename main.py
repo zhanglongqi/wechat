@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+longqi 9/6/15 22:11
+
+"""
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 import tornado.ioloop
 import tornado.web
@@ -20,7 +27,7 @@ class WechatHandler(tornado.web.RequestHandler):
         timestamp = self.get_argument('timestamp')
         nonce = self.get_argument('nonce')
         echostr = self.get_argument('echostr')
-        # 自己的token
+        # input your token
         token = 'test'
         # 字典序排序
         args_list = [token, timestamp, nonce]
@@ -30,7 +37,7 @@ class WechatHandler(tornado.web.RequestHandler):
         sha1 = hashlib.sha1()
         map(sha1.update, args_list)
         hashcode = sha1.hexdigest()
-        # 如果是来自微信的请求，则回复echostr
+        # if success return echostr to wechat
         print(hashcode)
         if hashcode == signature:
             print("true")
