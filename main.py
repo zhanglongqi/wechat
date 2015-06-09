@@ -10,7 +10,7 @@ import hashlib
 
 from tornado.options import define, options
 
-define("port", default=80, help="run on the given port", type=int)
+define("port", default=8000, help="run on the given port", type=int)
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -20,7 +20,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class WechatHandler(tornado.web.RequestHandler):
     def get(self):
-        print(self.request)
+        print('URI', self.request.uri)
         signature = self.get_argument('signature')
         timestamp = self.get_argument('timestamp')
         nonce = self.get_argument('nonce')
@@ -36,7 +36,7 @@ class WechatHandler(tornado.web.RequestHandler):
         map(sha1.update, args_list)
         hashcode = sha1.hexdigest()
         # if success return echostr to wechat
-        print(hashcode)
+        print('hashcode', hashcode)
         if hashcode == signature:
             print("true")
             self.write(echostr)
