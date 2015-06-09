@@ -21,7 +21,7 @@ class WechatHandler(tornado.web.RequestHandler):
         nonce = self.get_argument('nonce')
         echostr = self.get_argument('echostr')
         # 自己的token
-        token = 'imissyoumengmeng'
+        token = 'test'
         # 字典序排序
         args_list = [token, timestamp, nonce]
         print(args_list)
