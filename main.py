@@ -3,6 +3,10 @@ import tornado.ioloop
 import tornado.web
 import hashlib
 
+from tornado.options import define, options
+
+define("port", default=8000, help="run on the given port", type=int)
+
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -19,12 +23,12 @@ class WechatHandler(tornado.web.RequestHandler):
         # 自己的token
         token = "imissyoumengmeng"
         # 字典序排序
-        list = [token, timestamp, nonce]
-        print(list)
-        list.sort()
+        args_list = [token, timestamp, nonce]
+        print(args_list)
+        args_list.sort()
         # sha1加密算法
         sha1 = hashlib.sha1()
-        map(sha1.update, list)
+        map(sha1.update, args_list)
         hashcode = sha1.hexdigest()
         # 如果是来自微信的请求，则回复echostr
         if hashcode == signature:
@@ -38,5 +42,5 @@ application = tornado.web.Application([
 ])
 
 if __name__ == "__main__":
-    application.listen(80)
+    application.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
