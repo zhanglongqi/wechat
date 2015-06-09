@@ -27,11 +27,11 @@ class WechatHandler(tornado.web.RequestHandler):
         echostr = self.get_argument('echostr')
         # input your token
         token = 'test'
-        # 字典序排序
+        #
         args_list = [token, timestamp, nonce]
         print(args_list)
         args_list.sort()
-        # sha1加密算法
+        # sha1
         sha1 = hashlib.sha1()
         map(sha1.update, args_list)
         hashcode = sha1.hexdigest()
