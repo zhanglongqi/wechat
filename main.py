@@ -18,7 +18,7 @@ class WechatHandler(tornado.web.RequestHandler):
         nonce = data.nonce
         echostr = data.echostr
         # 自己的token
-        token = "yourtoken"
+        token = "imissyoumengmeng"
         # 字典序排序
         list = [token, timestamp, nonce]
         list.sort()
