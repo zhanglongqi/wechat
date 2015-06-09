@@ -11,16 +11,15 @@ class MainHandler(tornado.web.RequestHandler):
 
 class WechatHandler(tornado.web.RequestHandler):
     def get(self):
-        data = self.get_argument()
-        print(data)
-        signature = data.signature
-        timestamp = data.timestamp
-        nonce = data.nonce
-        echostr = data.echostr
+        signature = self.get_argument('signature')
+        timestamp = self.get_argument('timestamp')
+        nonce = self.get_argument('nonce')
+        echostr = self.get_argument('echostr')
         # 自己的token
         token = "imissyoumengmeng"
         # 字典序排序
         list = [token, timestamp, nonce]
+        print(list)
         list.sort()
         # sha1加密算法
         sha1 = hashlib.sha1()
