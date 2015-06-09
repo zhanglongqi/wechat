@@ -27,8 +27,8 @@ class WechatHandler(tornado.web.RequestHandler):
         hashcode = sha1.hexdigest()
         # 如果是来自微信的请求，则回复echostr
         if hashcode == signature:
-            # print "true"
-            return echostr
+            print("true")
+            self.write(echostr)
 
 
 application = tornado.web.Application([
