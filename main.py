@@ -34,6 +34,8 @@ class WechatHandler(tornado.web.RequestHandler):
         if hashcode == signature:
             print("true")
             self.write(echostr)
+        else:
+            self.write('file ... ')
 
 
 application = tornado.web.Application([
