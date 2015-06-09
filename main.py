@@ -11,6 +11,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class WechatHandler(tornado.web.RequestHandler):
     def get(self):
+        print(self.request)
         signature = self.get_argument('signature')
         timestamp = self.get_argument('timestamp')
         nonce = self.get_argument('nonce')
