@@ -4,8 +4,6 @@
 longqi 9/6/15 22:11
 
 """
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
 import tornado.ioloop
 import tornado.web
 import hashlib
