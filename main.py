@@ -7,7 +7,7 @@ longqi 9/6/15 22:11
 import tornado.ioloop
 import tornado.web
 import hashlib
-from wechat_sdk import WechatBasic
+# from wechat_sdk import WechatBasic
 
 from tornado.options import define, options
 
@@ -20,7 +20,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 
 token = 'test'
-wechat = WechatBasic(token=token)
+# wechat = WechatBasic(token=token)
 
 
 class WechatHandler(tornado.web.RequestHandler):
@@ -50,8 +50,8 @@ class WechatHandler(tornado.web.RequestHandler):
         signature = self.get_argument('signature')
         timestamp = self.get_argument('timestamp')
         nonce = self.get_argument('nonce')
-        if wechat.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
-            print('POST pass: ', self.request.body)
+        # if wechat.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
+        print('POST pass: ', self.request.body)
 
 
 application = tornado.web.Application([
