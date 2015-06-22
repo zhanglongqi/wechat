@@ -8,6 +8,7 @@ import tornado.ioloop
 import tornado.web
 import hashlib
 # from wechat_sdk import WechatBasic
+from lib import XMLStore
 
 from tornado.options import define, options
 
@@ -21,6 +22,32 @@ class MainHandler(tornado.web.RequestHandler):
 
 token = 'test'
 # wechat = WechatBasic(token=token)
+def parse_data(self, data):
+    """
+    解析微信服务器发送过来的数据并保存类中
+    :param data: HTTP Request 的 Body 数据
+    :raises ParseError: 解析微信服务器数据错误, 数据不合法
+    """
+    result = {}
+    if type(data) == unicode:  # todo
+        data = data.encode('utf-8')
+    elif type(data) == str:
+        pass
+    else:
+        pass
+    try:
+        xml = XMLStore(xmlstring=data)
+    except Exception:
+        pass
+
+    result = xml.xml2dict
+    result['raw'] = data
+    result['type'] = result.pop('MsgType').lower()
+
+    # todo
+    message_type = MESSAGE_TYPES.get(result['type'], UnknownMessage)
+    self.__message = message_type(result)
+    self.__is_parse = True
 
 
 class WechatHandler(tornado.web.RequestHandler):
