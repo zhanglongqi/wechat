@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # From: https://github.com/whtsky/WeRoBot/blob/develop/werobot/messages.py
 
-from sexceptions import ParseError
+from exceptions import ParseError
 
 MESSAGE_TYPES = {}
 
