@@ -172,7 +172,7 @@ class WechatBasic(object):
         :return: 符合微信服务器要求的 XML 响应数据
         """
         self._check_parse()
-        content = self._transcoding(content)
+        # content = self._transcoding(content)
         if escape:
             content = cgi.escape(content)
 
