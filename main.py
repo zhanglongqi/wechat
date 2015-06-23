@@ -9,6 +9,8 @@ import tornado.web
 import hashlib
 # from wechat_sdk import WechatBasic
 from lib import XMLStore
+from messages import UnknownMessage,MESSAGE_TYPES
+from basic import WechatBasic
 
 from tornado.options import define, options
 
@@ -21,7 +23,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 
 token = 'test'
-# wechat = WechatBasic(token=token)
+wechat = WechatBasic(token=token)
 def parse_data(self, data):
     """
     解析微信服务器发送过来的数据并保存类中
@@ -44,7 +46,6 @@ def parse_data(self, data):
     result['raw'] = data
     result['type'] = result.pop('MsgType').lower()
 
-    # todo
     message_type = MESSAGE_TYPES.get(result['type'], UnknownMessage)
     self.__message = message_type(result)
     self.__is_parse = True
@@ -77,8 +78,8 @@ class WechatHandler(tornado.web.RequestHandler):
         signature = self.get_argument('signature')
         timestamp = self.get_argument('timestamp')
         nonce = self.get_argument('nonce')
-        # if wechat.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
-        print('POST pass: ', self.request.body)
+        if wechat.check_signature(signature=signature, timestamp=timestamp, nonce=nonce):
+            print('POST pass: ', self.request.body)
 
 
 application = tornado.web.Application([
