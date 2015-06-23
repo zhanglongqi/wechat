@@ -374,7 +374,7 @@ class WechatBasic(object):
 
         return self._get('https://api.weixin.qq.com/cgi-bin/menu/delete')
 
-    s# def upload_media(self, media_type, media_file, extension=''):
+    # def upload_media(self, media_type, media_file, extension=''):
     #     """
     #     上传多媒体文件
     #     详情请参考 http://mp.weixin.qq.com/wiki/10/78b15308b053286e2a66b33f0f0f5fb6.html
