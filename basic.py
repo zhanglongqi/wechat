@@ -21,6 +21,7 @@ class WechatBasic(object):
 
     仅包含官方 API 中所包含的内容, 如需高级功能支持请移步 ext.py 中的 WechatExt 类
     """
+
     def __init__(self, token=None, appid=None, appsecret=None, partnerid=None,
                  partnerkey=None, paysignkey=None, access_token=None, access_token_expires_at=None,
                  jsapi_ticket=None, jsapi_ticket_expires_at=None, checkssl=False):
@@ -105,12 +106,13 @@ class WechatBasic(object):
         :raises ParseError: 解析微信服务器数据错误, 数据不合法
         """
         result = {}
-        if type(data) == unicode:
-            data = data.encode('utf-8')
-        elif type(data) == str:
-            pass
-        else:
-            raise ParseError()
+        # if type(data) == unicode:
+        #     data = data.encode('utf-8')
+        # elif type(data) == str:
+        #     pass
+        # else:
+        #     raise ParseError()
+        data = str(data, encoding='utf-8')
 
         try:
             xml = XMLStore(xmlstring=data)
