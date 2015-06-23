@@ -5,14 +5,14 @@ import requests
 import time
 import json
 import cgi
-from StringIO import StringIO
+# from StringIO import StringIO
 
 from xml.dom import minidom
 
-from .messages import MESSAGE_TYPES, UnknownMessage
-from .exceptions import ParseError, NeedParseError, NeedParamError, OfficialAPIError
-from .reply import TextReply, ImageReply, VoiceReply, VideoReply, MusicReply, Article, ArticleReply
-from .lib import disable_urllib3_warning, XMLStore
+from messages import MESSAGE_TYPES, UnknownMessage
+from exceptions import ParseError, NeedParseError, NeedParamError, OfficialAPIError
+from reply import TextReply, ImageReply, VoiceReply, VideoReply, MusicReply, Article, ArticleReply
+from lib import disable_urllib3_warning, XMLStore
 
 
 class WechatBasic(object):
@@ -374,48 +374,48 @@ class WechatBasic(object):
 
         return self._get('https://api.weixin.qq.com/cgi-bin/menu/delete')
 
-    def upload_media(self, media_type, media_file, extension=''):
-        """
-        上传多媒体文件
-        详情请参考 http://mp.weixin.qq.com/wiki/10/78b15308b053286e2a66b33f0f0f5fb6.html
-        :param media_type: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
-        :param media_file: 要上传的文件，一个 File object 或 StringIO object
-        :param extension: 如果 media_file 传入的为 StringIO object，那么必须传入 extension 显示指明该媒体文件扩展名，如 ``mp3``, ``amr``；如果 media_file 传入的为 File object，那么该参数请留空
-        :return: 返回的 JSON 数据包
-        :raise HTTPError: 微信api http 请求失败
-        """
-        self._check_appid_appsecret()
-        if not isinstance(media_file, file) and not isinstance(media_file, StringIO):
-            raise ValueError('Parameter media_file must be file object or StringIO.StringIO object.')
-        if isinstance(media_file, StringIO) and extension.lower() not in ['jpg', 'jpeg', 'amr', 'mp3', 'mp4']:
-            raise ValueError('Please provide \'extension\' parameters when the type of \'media_file\' is \'StringIO.StringIO\'.')
-        if isinstance(media_file, file):
-            extension = media_file.name.split('.')[-1]
-            if extension.lower() not in ['jpg', 'jpeg', 'amr', 'mp3', 'mp4']:
-                raise ValueError('Invalid file type.')
-
-        ext = {
-            'jpg': 'image/jpeg',
-            'jpeg': 'image/jpeg',
-            'amr': 'audio/amr',
-            'mp3': 'audio/mpeg',
-            'mp4': 'video/mp4',
-        }
-        if isinstance(media_file, StringIO):
-            filename = 'temp.' + extension
-        else:
-            filename = media_file.name
-
-        return self._post(
-            url='http://file.api.weixin.qq.com/cgi-bin/media/upload',
-            params={
-                'access_token': self.access_token,
-                'type': media_type,
-            },
-            files={
-                'media': (filename, media_file, ext[extension])
-            }
-        )
+    s# def upload_media(self, media_type, media_file, extension=''):
+    #     """
+    #     上传多媒体文件
+    #     详情请参考 http://mp.weixin.qq.com/wiki/10/78b15308b053286e2a66b33f0f0f5fb6.html
+    #     :param media_type: 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
+    #     :param media_file: 要上传的文件，一个 File object 或 StringIO object
+    #     :param extension: 如果 media_file 传入的为 StringIO object，那么必须传入 extension 显示指明该媒体文件扩展名，如 ``mp3``, ``amr``；如果 media_file 传入的为 File object，那么该参数请留空
+    #     :return: 返回的 JSON 数据包
+    #     :raise HTTPError: 微信api http 请求失败
+    #     """
+    #     self._check_appid_appsecret()
+    #     if not isinstance(media_file, file) and not isinstance(media_file, StringIO):
+    #         raise ValueError('Parameter media_file must be file object or StringIO.StringIO object.')
+    #     if isinstance(media_file, StringIO) and extension.lower() not in ['jpg', 'jpeg', 'amr', 'mp3', 'mp4']:
+    #         raise ValueError('Please provide \'extension\' parameters when the type of \'media_file\' is \'StringIO.StringIO\'.')
+    #     if isinstance(media_file, file):
+    #         extension = media_file.name.split('.')[-1]
+    #         if extension.lower() not in ['jpg', 'jpeg', 'amr', 'mp3', 'mp4']:
+    #             raise ValueError('Invalid file type.')
+    #
+    #     ext = {
+    #         'jpg': 'image/jpeg',
+    #         'jpeg': 'image/jpeg',
+    #         'amr': 'audio/amr',
+    #         'mp3': 'audio/mpeg',
+    #         'mp4': 'video/mp4',
+    #     }
+    #     if isinstance(media_file, StringIO):
+    #         filename = 'temp.' + extension
+    #     else:
+    #         filename = media_file.name
+    #
+    #     return self._post(
+    #         url='http://file.api.weixin.qq.com/cgi-bin/media/upload',
+    #         params={
+    #             'access_token': self.access_token,
+    #             'type': media_type,
+    #         },
+    #         files={
+    #             'media': (filename, media_file, ext[extension])
+    #         }
+    #     )
 
     def download_media(self, media_id):
         """
