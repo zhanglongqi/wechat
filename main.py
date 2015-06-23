@@ -60,7 +60,7 @@ class WechatHandler(tornado.web.RequestHandler):
             # 获得解析结果, message 为 WechatMessage 对象 (wechat_sdk.messages中定义)
             message = wechat.get_message()
             print(message.type, '\n', message.content)
-            response = wechat.response_text('Hi... you said' + message.content)
+            response = wechat.response_text('Hi... you said \n' + message.content)
             self.write(response)
 
 
